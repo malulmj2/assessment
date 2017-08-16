@@ -8,7 +8,9 @@ import static java.util.stream.Collectors.toList;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -16,13 +18,15 @@ import java.util.Objects;
  *
  */
 public final class ReflectionUtil {
-    private  ReflectionUtil() {
+    private ReflectionUtil() {
     }
-    
+
     /**
      * Gets all the fields and the inherited one for the provided class
+     * 
      * @param clazz
-     * @param excludeSerialVersionUID - Flag to ignore field if is name is serialVersionUID
+     * @param excludeSerialVersionUID
+     *            - Flag to ignore field if is name is serialVersionUID
      * @return
      */
     public static List<Field> getAllFields(Class<?> clazz, boolean excludeSerialVersionUID) {
@@ -63,6 +67,22 @@ public final class ReflectionUtil {
 	    else if (field.getType().equals(String.class))
 		return true;
 	    else if (field.getType().equals(Character.class))
+		return true;
+	}
+	return false;
+    }
+
+    /**
+     * Check is the field has its type defines as a collection type, array or
+     * Map
+     */
+    public static boolean isCollectionsMapType(Field field) {
+	if (!Objects.isNull(field)) {
+	    if (Collection.class.isAssignableFrom(field.getType()))
+		return true;
+	    else if (Map.class.isAssignableFrom(field.getType()))
+		return true;
+	    else if (field.getType().isArray())
 		return true;
 	}
 	return false;

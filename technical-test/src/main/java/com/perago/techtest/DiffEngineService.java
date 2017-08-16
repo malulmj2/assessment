@@ -5,9 +5,12 @@ package com.perago.techtest;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import com.perago.techtest.util.ReflectionUtil;
+import com.perago.techtest.util.StringUtils;
 
 /**
  * {@link DiffEngine} Person Implementation.<br>
@@ -84,16 +87,25 @@ public class DiffEngineService implements DiffEngine {
 		     * Information that was not changed must not be reflected in
 		     * a Diff
 		     */
-		    if ((originalFieldValue == null && modifiedFieldValue != null) || (modifiedFieldValue == null && originalFieldValue != null)
+		    if ((originalFieldValue == null && modifiedFieldValue != null)
+			    || (modifiedFieldValue == null && originalFieldValue != null)
 			    || (!originalFieldValue.equals(modifiedFieldValue))) {
-			DiffRecord subDiffRecord = record.addRecord(action, field.getName(), originalFieldValue, modifiedFieldValue);
+			if (ReflectionUtil.isCollectionsMapType(field)) {
+			    addCollectionsMapTypeRecord(action, field, originalFieldValue, modifiedFieldValue, record);
+			} else {
+			    DiffRecord subDiffRecord = record.addRecord(action, field.getName(), originalFieldValue,
+				    modifiedFieldValue);
 
-			/*
-			 * Diffs must recursively reflect modifications to all child objects
-			 */
-			if (!ReflectionUtil.isJavaType(field)) {
-			    if (originalFieldValue instanceof Serializable || modifiedFieldValue instanceof Serializable) {
-				subDiffRecord.addRecord(handleCalculate((Serializable) originalFieldValue, (Serializable) modifiedFieldValue));
+			    /*
+			     * Diffs must recursively reflect modifications to
+			     * all child objects
+			     */
+			    if (!ReflectionUtil.isJavaType(field) && !ReflectionUtil.isCollectionsMapType(field)) {
+				if (originalFieldValue instanceof Serializable
+					|| modifiedFieldValue instanceof Serializable) {
+				    subDiffRecord.addRecord(handleCalculate((Serializable) originalFieldValue,
+					    (Serializable) modifiedFieldValue));
+				}
 			    }
 			}
 
@@ -107,6 +119,33 @@ public class DiffEngineService implements DiffEngine {
 
 	}
 	return record;
+    }
+
+    private void addCollectionsMapTypeRecord(DiffAction action, Field field, Object originalFieldValue,
+	    Object modifiedFieldValue, DiffRecord record) {
+	String originalValue = null;
+	String modifiedValue = null;
+	if (field.getType().isArray()) {
+
+	    originalValue = convertArrayToString(field, originalFieldValue);
+	    modifiedValue = convertArrayToString(field, modifiedFieldValue);
+	} else {
+
+	    originalValue = Objects.isNull(originalFieldValue) ? null : originalFieldValue.toString();
+	    modifiedValue = Objects.isNull(modifiedFieldValue) ? null : modifiedFieldValue.toString();
+	}
+
+	if (!StringUtils.areStringEqual(originalValue, modifiedValue)) {
+	    record.addRecord(action, field.getName(), originalValue, modifiedValue);
+	}
+    }
+
+    private String convertArrayToString(Field field, Object originalFieldValue) {
+	String strArray = null;
+	if (!Objects.isNull(originalFieldValue) && field.getType().isArray()) {
+	    strArray = Arrays.toString((Object[]) originalFieldValue);
+	}
+	return strArray;
     }
 
     /**

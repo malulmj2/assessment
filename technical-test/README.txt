@@ -11,5 +11,6 @@ Example 5 and 6 should also be as below;
 1.2.1	Update: Person
 1.2.1.1	 	Update: firstName from “Tom” to “Jim
 
---------------------CONCERNS-------------------------
+--------------------ASSUMPTIONS-------------------------
 
+1.	Properties of original or modified that are collections, arrays and maps will only contain primitive types
