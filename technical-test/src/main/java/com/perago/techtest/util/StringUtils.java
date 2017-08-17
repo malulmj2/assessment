@@ -13,6 +13,9 @@ public final class StringUtils {
     private StringUtils() {
     }
 
+    /**
+     * Check if the two strings are equal.
+     */
     public static boolean areStringEqual(String str1, String str2) {
 	if (str1 == str2)
 	    return true;

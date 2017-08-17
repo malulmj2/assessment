@@ -124,6 +124,15 @@ public class DiffEngineService implements DiffEngine {
 	return record;
     }
 
+    /**
+     * The the collections, Maps, and Arrays as string values to the record
+     * 
+     * @param action
+     * @param field
+     * @param originalFieldValue
+     * @param modifiedFieldValue
+     * @param record
+     */
     private void addCollectionsMapTypeRecord(DiffAction action, Field field, Object originalFieldValue,
 	    Object modifiedFieldValue, DiffRecord record) {
 	String originalValue = null;

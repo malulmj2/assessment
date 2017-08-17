@@ -48,6 +48,7 @@ public class DiffRendererImpl implements DiffRenderer {
 
 	display.append("\n");
 	if (!record.getRecords().isEmpty()) {
+	    // Recursively render children
 	    for (int i = 0; i < record.getRecords().size(); i++) {
 		DiffRecord child = record.getRecords().get(i);
 		renderDiffRecord(display, child, displayNumber.concat(".").concat(String.valueOf(i + 1)));
