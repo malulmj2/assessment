@@ -1,4 +1,4 @@
-package com.perago.techtest;
+package com.perago.techtest.impl;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -10,6 +10,12 @@ import java.util.TreeSet;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.perago.techtest.Diff;
+import com.perago.techtest.DiffEngine;
+import com.perago.techtest.DiffException;
+import com.perago.techtest.impl.DiffAction;
+import com.perago.techtest.impl.DiffEngineService;
+import com.perago.techtest.impl.DiffRecord;
 import com.perago.techtest.test.Person;
 
 public class DiffEngineServiceTest {

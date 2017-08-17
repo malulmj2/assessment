@@ -1,4 +1,4 @@
-package com.perago.techtest;
+package com.perago.techtest.impl;
 
 public enum DiffAction {
 	CREATED("Create"),UPDATED("Update"),DELETED("Delete");

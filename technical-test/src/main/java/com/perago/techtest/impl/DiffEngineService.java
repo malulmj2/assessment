@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.perago.techtest;
+package com.perago.techtest.impl;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
@@ -9,6 +9,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
+import com.perago.techtest.Diff;
+import com.perago.techtest.DiffEngine;
+import com.perago.techtest.DiffException;
 import com.perago.techtest.util.ReflectionUtil;
 import com.perago.techtest.util.StringUtils;
 

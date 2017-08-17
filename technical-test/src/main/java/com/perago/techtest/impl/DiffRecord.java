@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.perago.techtest;
+package com.perago.techtest.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +57,8 @@ public class DiffRecord {
 
     @Override
     public String toString() {
-	return "DiffItem [action=" + action + ", fieldName=" + fieldName + ", originalValue=" + originalValue + ", newValue=" + modifiedValue + ", records=" + records + "]";
+	return "DiffItem [action=" + action + ", fieldName=" + fieldName + ", originalValue=" + originalValue
+		+ ", newValue=" + modifiedValue + ", records=" + records + "]";
     }
 
 }
